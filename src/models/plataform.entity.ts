@@ -1,4 +1,4 @@
-import sequelize from '../db';
+import sequelize from '../../db';
 import  { Optional, Model, DataType, DataTypes } from 'sequelize';
 import { useRecord } from 'adminjs';
 

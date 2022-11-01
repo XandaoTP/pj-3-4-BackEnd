@@ -4,9 +4,12 @@ import AdminJsExpress from '@adminjs/express';
 import  express  from 'express';
 import sequelize from './db';
 import * as AdminJSSequelize from '@adminjs/sequelize';
-import { Plataforms } from './models/plataform.entity';
-import { Games } from './models/games.entity';
-import { optionsResourceModel } from './utils/optionsResourceModel';
+import { Plataforms } from './src/models/plataform.entity';
+import { Games } from './src/models/games.entity';
+import { optionsResourceModel } from './src/utils/optionsResourceModel';
+import { Users } from './src/models/user.entity';
+import bcrypt from 'bcrypt'
+
 const PORT = process.env.PORT_ENV;
 
 AdminJS.registerAdapter({
@@ -19,13 +22,18 @@ const run = async () =>{
         rootPath: '/home',
         resources: [
             optionsResourceModel(Plataforms),
-            optionsResourceModel(Games)
+            optionsResourceModel(Games),
+            optionsResourceModel(Users, {
+                encryptedPassword:{
+                    list: false, edit: true, create: true, show: false
+                    }
+            }),
         ],
         dashboard: {
             handle: () => {
                 console.log('Bem vindo');
             },
-            component: AdminJS.bundle('./components/dashboard')
+            component: AdminJS.bundle('./src/components/dashboard')
         },
         branding:{
             companyName: 'Prejeto 3 e 4 Infnet',
@@ -42,6 +50,7 @@ const run = async () =>{
     const admin = new AdminJS(admiJsOptions);
 
     const adminRouter = AdminJsExpress.buildRouter(admin)
+     
     app.use(admin.options.rootPath, adminRouter)
 
     app.listen(PORT, () => {
@@ -49,3 +58,5 @@ const run = async () =>{
     })
 }
 run();
+
+

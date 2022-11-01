@@ -1,3 +1,3 @@
 AdminJS.UserComponents = {}
-import Component1 from '../components/dashboard'
+import Component1 from '../src/components/dashboard'
 AdminJS.UserComponents.Component1 = Component1
