@@ -1,4 +1,4 @@
-export function optionsResourceModel (model: object, invisibleElement: any = null) {
+export function optionsResourceModel (model: object, invisibleElement: any = null, actions: any = null) {
     return { resource: model,
             options: {     
                 properties: {
@@ -13,7 +13,8 @@ export function optionsResourceModel (model: object, invisibleElement: any = nul
                             list: true, edit: false, create: false, show: true
                         }
                     }
-                }
+                },
+                actions: actions
             },
         }
     }

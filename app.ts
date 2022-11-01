@@ -24,9 +24,25 @@ const run = async () =>{
             optionsResourceModel(Plataforms),
             optionsResourceModel(Games),
             optionsResourceModel(Users, {
-                encryptedPassword:{
+                encryptedPassword: {
+                    IsVisible:{
                     list: false, edit: true, create: true, show: false
-                    }
+                        }
+                    }    
+                },
+                {
+                    new: {
+                        before: async function(request: any) {
+                            request.payload.encryptedPassword = await bcrypt.hash(request.payload.encryptedPassword,10)
+                            return request
+                        }  
+                    },
+                    edit: {
+                        before: async function(request: any) {
+                            console.log('salvando#######################################')
+                            return request
+                        }  
+                    }   
             }),
         ],
         dashboard: {
