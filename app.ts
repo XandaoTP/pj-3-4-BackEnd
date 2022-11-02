@@ -27,9 +27,21 @@ const run = async () =>{
                 encryptedPassword: {
                     type: 'password',
                     IsVisible:{
-                    list: false, edit: true, create: true, show: false
+                        list: false, edit: true, create: true, show: false
                         }
-                    }    
+                    },
+                active :{
+                        IsVisible:{
+                            list: true, edit: false, create: false, show: true
+
+                        }    
+                    },
+                pin :{
+                        IsVisible:{
+                            list: false, edit: false, create: false, show: false
+
+                        }    
+                    },
                 },
                 {
                     new: {

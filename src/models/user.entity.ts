@@ -10,6 +10,8 @@ interface IUser{
     role: string;
     createdAt: Date;
     updatedAt: Date;
+    pin: string;
+    active: number;
 }
 
 export type UserCreateAttributes = Optional<IUser, 'id'>
@@ -23,7 +25,10 @@ export class Users extends Model<IUser, UserCreateAttributes> {
    declare role: string | null;
    declare createdAt: Date | null;
    declare updatedAt: Date | null;
+   declare active: number | null;
+   declare pin: string | null;
 }
+
 
 Users.init(
     {
@@ -52,6 +57,14 @@ Users.init(
             type: DataTypes.ENUM('admin', 'User'),
             allowNull: false,
             },
+        pin: {
+                type: DataTypes.STRING(4),
+                allowNull: true
+            },
+        active: {
+            type: DataTypes.INTEGER,
+            defaultValue: false
+        },  
         createdAt: {
             type: DataTypes.DATE,  
             allowNull: true
