@@ -11,6 +11,7 @@ import { Users } from './src/models/user.entity';
 import bcrypt from 'bcrypt'
 import session from 'express-session' 
 import options from './src/utils/optionsMySqlSession';
+import auth from './src/routes/auth';
 
 const PORT = process.env.PORT_ENV;
 var mysqlStore = require('express-mysql-session')(session);
@@ -126,7 +127,7 @@ const run = async () =>{
         )
      
     app.use(admin.options.rootPath, adminRouter)
-
+    app.use('/auth', auth)    
     app.listen(PORT, () => {
         console.log('Funfando');
     })
