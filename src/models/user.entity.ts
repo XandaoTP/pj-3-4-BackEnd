@@ -19,7 +19,7 @@ export class Users extends Model<IUser, UserCreateAttributes> {
    declare name: string | null;
    declare email: string | null;
    declare username: string | null;
-   declare encryptedPassword: string | null;
+   declare encryptedPassword: string ;
    declare role: string | null;
    declare createdAt: Date | null;
    declare updatedAt: Date | null;
