@@ -9,8 +9,11 @@ import { Games } from './src/models/games.entity';
 import { optionsResourceModel } from './src/utils/optionsResourceModel';
 import { Users } from './src/models/user.entity';
 import bcrypt from 'bcrypt'
+import session from 'express-session' 
+import options from './src/utils/optionsMySqlSession';
 
 const PORT = process.env.PORT_ENV;
+var mysqlStore = require('express-mysql-session')(session);
 
 AdminJS.registerAdapter({
     Resource: AdminJSSequelize.Resource,
@@ -85,6 +88,8 @@ const run = async () =>{
 
     const admin = new AdminJS(admiJsOptions);
 
+    const sessionStore = new mysqlStore(options);
+
     const adminRouter = AdminJsExpress.buildAuthenticatedRouter(
         admin,
         {
@@ -107,6 +112,17 @@ const run = async () =>{
             cookiePassword: '0vXqcFO0rmJPxaMcg0mnlxw85818t2PP'     
         },
         null,
+        {
+            store: sessionStore,
+            resave: true,
+            saveUninitialized: true,
+            secret: '0vXqcFO0rmJPxaMcg0mnlxw85818t2PP',
+            cookie: {
+                httpOnly: process.env.NODE_ENV === 'production',
+                secure: process.env.NODE_ENV === 'production'
+            },
+            name: 'adminjs'
+        }
         )
      
     app.use(admin.options.rootPath, adminRouter)
