@@ -3,7 +3,7 @@ import express from 'express'
 const auth = express.Router();
 
 auth.get('/confirm-email', (req, res) => {
- res.send('oi')
+ res.render('confirm-email')
 })
 
 export default auth 

@@ -12,6 +12,8 @@ import bcrypt from 'bcrypt'
 import session from 'express-session' 
 import options from './src/utils/optionsMySqlSession';
 import auth from './src/routes/auth';
+import hbs from 'hbs';
+import path from 'node:path' 
 
 const PORT = process.env.PORT_ENV;
 var mysqlStore = require('express-mysql-session')(session);
@@ -124,8 +126,10 @@ const run = async () =>{
             },
             name: 'adminjs'
         }
-        )
-     
+        );
+    
+    hbs.registerPartials(path.join(__dirname + '/template'))
+    app.set('view engine','hbs')
     app.use(admin.options.rootPath, adminRouter)
     app.use('/auth', auth)    
     app.listen(PORT, () => {
