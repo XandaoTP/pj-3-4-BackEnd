@@ -14,6 +14,7 @@ import options from './src/utils/optionsMySqlSession';
 import auth from './src/routes/auth';
 import hbs from 'hbs';
 import path from 'node:path' 
+import { userEncryptPass, userOptions } from './src/utils/usersOptionsResource';
 
 const PORT = process.env.PORT_ENV;
 var mysqlStore = require('express-mysql-session')(session);
@@ -29,47 +30,10 @@ const run = async () =>{
         resources: [
             optionsResourceModel(Plataforms),
             optionsResourceModel(Games),
-            optionsResourceModel(Users, {
-                encryptedPassword: {
-                    type: 'password',
-                    IsVisible:{
-                        list: false, edit: true, create: true, show: false
-                        }
-                    },
-                active :{
-                        IsVisible:{
-                            list: true, edit: false, create: false, show: true
-
-                        }    
-                    },
-                pin :{
-                        IsVisible:{
-                            list: false, edit: false, create: false, show: false
-
-                        }    
-                    },
-                },
-                {
-                    new: {
-                        before: async function(request: any) {
-                            if(request.payload.encryptedPassword) {
-                                request.payload.encryptedPassword = await bcrypt.hash(request.payload.encryptedPassword, 8)
-                            }
-                            return request
-                        }  
-                    },
-                    edit: {
-                        before: async function(request: any) {
-                            if(request.payload.encryptedPassword) {
-                            if(request.payload.encryptedPassword.indexOf('$2b$08') === -1) {
-                                request.payload.encryptedPassword = await bcrypt.hash(request.payload.encryptedPassword, 8)
-                            }
-                        }
-                            return request
-                        }  
-                    }   
-            }),
-        ],
+            optionsResourceModel(Users,
+                userOptions,
+                userEncryptPass,
+        )],
         dashboard: {
             handle: () => {
                 console.log('Bem vindo');
