@@ -26,6 +26,9 @@ AdminJS.registerAdapter({
 
 const run = async () =>{
     const admiJsOptions = {
+        assets: {
+            styles: ["./sidebar.css"],
+        },
         rootPath: '/admin',
         resources: [
             optionsResourceModel(Plataforms),
@@ -92,6 +95,7 @@ const run = async () =>{
         }
         );
     
+    app.use(express.static(path.join(__dirname, "./public")));
     hbs.registerPartials(path.join(__dirname + '/template'))
     app.set('view engine','hbs')
     app.use(admin.options.rootPath, adminRouter)
