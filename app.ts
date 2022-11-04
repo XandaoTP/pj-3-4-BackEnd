@@ -15,6 +15,7 @@ import auth from './src/routes/auth';
 import hbs from 'hbs';
 import path from 'node:path' 
 import { userEncryptPass, userOptions } from './src/utils/usersOptionsResource';
+import bodyParser from 'body-parser'
 
 const PORT = process.env.PORT_ENV;
 var mysqlStore = require('express-mysql-session')(session);
@@ -94,9 +95,10 @@ const run = async () =>{
             name: 'adminjs'
         }
         );
-    
+   
+    app.use(bodyParser.urlencoded({ extended: true }));
     app.use(express.static(path.join(__dirname, "./public")));
-    hbs.registerPartials(path.join(__dirname + '/template'))
+    hbs.registerPartials(path.join(__dirname + "./template"))
     app.set('view engine','hbs')
     app.use(admin.options.rootPath, adminRouter)
     app.use('/auth', auth)    

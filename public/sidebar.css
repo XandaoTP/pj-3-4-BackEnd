@@ -1,8 +1,8 @@
 :root {
     --topbar-color: white;
     --sidebar-bg-color: rgb(2, 1, 1);
-    --sidebar-color: white;
-    --sidebar-link-color: orange;
+    --sidebar-color: rgb(253, 253, 253);
+    --sidebar-link-color: rgb(30, 157, 49);
   }
   
   section[data-css="sidebar"] {
@@ -17,6 +17,11 @@
   
   a[data-css="sidebar-logo"] {
     background-color: var(--sidebar-bg-color) !important;
+    width: 80px;
+    height: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 1em;
   }
   
   section[data-css="sidebar-resources"] {
