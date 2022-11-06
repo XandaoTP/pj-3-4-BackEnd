@@ -80,6 +80,7 @@
             let iptEl = null;
             if(event.currentTarget.value === ""){
             iptEl = document.querySelector(`#ipt_${iptname -1}`)
+            isNaN(iptEl) ? iptEl : null
             console.log(iptEl)
             } else {
             iptEl = document.querySelector(`#ipt_${iptname +1}`)
