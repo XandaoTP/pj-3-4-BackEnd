@@ -26,6 +26,7 @@ const userEncryptPass =  {
                 if(request.payload.encryptedPassword) {
                     request.payload.encryptedPassword = await bcrypt.hash(request.payload.encryptedPassword, 8)
                 }
+                //TODO: FAZER ENVIO DE E-MAIL AO CRIAR USUARIO
                 return request
             }  
         },
