@@ -96,6 +96,7 @@ const run = async () =>{
         }
         );
    
+    app.use(express.json())    
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(express.static(path.join(__dirname, "./public")));
     hbs.registerPartials(path.join(__dirname + "./template"))

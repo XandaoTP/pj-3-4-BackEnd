@@ -1,6 +1,4 @@
 import * as express from 'express' 
-
-
 const auth = express.Router();
 
 
