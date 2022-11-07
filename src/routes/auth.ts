@@ -11,7 +11,8 @@ auth.get('/confirm-email', (req, res) => {
 
 auth.post('/confirm-email', (req, res) => {
     console.log(req.body)
- res.render('confirm-email')
+    res.statusCode = 200
+    res.send({msg:'E-mail confirmado com sucesso.'})
 })
 
 export default auth 

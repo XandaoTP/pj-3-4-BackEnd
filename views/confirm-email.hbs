@@ -44,6 +44,13 @@
             color: rgb(255, 255, 255);
             cursor: pointer;
         }
+        #message{
+            color: #e74c3c;
+            text-align: center;
+            float: left;
+            margin-top: 1.2em;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -57,15 +64,17 @@
             <input type="number" class="inptnumber" name="4" id="ipt_4">
             <input type="number" class="inptnumber" name="5" id="ipt_5">
         </div>
+        <div id="message" style="display: none;">Digite o código PIN de 6 dígitos.</div>
         <div class="btn">
-            <button type="button">Verificar</button>
+            <button type="button" onclick="submitPin()" id="text_btn">Verificar</button>
         </div> 
     </form>
-    <script> 
-        
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>  
         const pinNumbers = document.querySelectorAll('.inputs input');
         const initialValue = [null, null, null, null, null, null];
-        console.log(pinNumbers)
+        const btn_text = document.querySelector('#text_btn')
+        const urlPin = window.location.origin;
 
         pinNumbers.forEach(value => {
             value.addEventListener('keyup', (event) => {
@@ -80,17 +89,55 @@
             let iptEl = null;
             if(event.currentTarget.value === ""){
             iptEl = document.querySelector(`#ipt_${iptname -1}`)
-            isNaN(iptEl) ? iptEl : null
-            console.log(iptEl)
             } else {
             iptEl = document.querySelector(`#ipt_${iptname +1}`)
-            console.log(iptEl)
             }
             if(iptEl){
                     iptEl.focus();
                 }
         })
         })
+
+        const submitPin = async () => {
+            const pin = initialValue.join("");
+            if(pin.length === 6){
+                try{
+                    const result = await requestPin(pin);
+                if(result.status === 200) {
+                btn_text.innerText = result.data.msg;
+                message.style.display = 'none'
+                pinNumbers.forEach(iptNumbers => {
+                    iptNumbers.value= '';
+                })
+            } 
+            }catch (err) {
+               btn_text.innerText = 'Erro ao validar email.'
+               btn_text.style.backgroundColor = '#e74c3c'
+            }
+        }else {
+            message.style.display = 'block';
+        }
+           
+        }
+
+        const requestPin =  async (pin) => {
+            console.log(typeof pin, pin)
+            try {
+             const result = await axios({
+                   
+                    url: `http://localhost:3000/auth/confirm-email`,
+                    method: "post",
+                    data: {
+                        pin
+                        } 
+            })
+            console.log('oiiiiii', result)
+            return result
+
+            } catch (err) {
+                throw err;
+            }
+        }
     </script>
 </body>
 </html>
