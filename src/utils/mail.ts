@@ -4,6 +4,6 @@ export default class Mail {
         console.log(to)
         console.log(subject)
         console.log(html)
-        console.log('####email######')
+        console.log('#####email#######')
     }
 }
