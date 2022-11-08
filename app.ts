@@ -16,7 +16,9 @@ import hbs from 'hbs';
 import path from 'node:path' 
 import { userEncryptPass, userOptions } from './src/utils/usersOptionsResource';
 import bodyParser from 'body-parser'
+import UserController from './src/controllers/user.controller';
 
+const userControl = new UserController();
 const PORT = process.env.PORT_ENV;
 var mysqlStore = require('express-mysql-session')(session);
 
@@ -74,8 +76,15 @@ const run = async () =>{
                 if(userLogin){
                     const verifyPass = await bcrypt.compare(password, userLogin.encryptedPassword);
                     if(verifyPass){
+                        if(userLogin.active){
                         return userLogin;
+                    } else {
+                        userControl.sendPin(userLogin.pin, userLogin.email)
+                        return false
+                        }
                     }
+                }else {
+                return false
                 }
                 return false
             },
@@ -97,11 +106,11 @@ const run = async () =>{
         );
    
     app.use(express.json())    
-    app.use(bodyParser.urlencoded({ extended: true }));
     app.use(express.static(path.join(__dirname, "./public")));
     hbs.registerPartials(path.join(__dirname + "./template"))
     app.set('view engine','hbs')
     app.use(admin.options.rootPath, adminRouter)
+    app.use(bodyParser.urlencoded({ extended: true }));
     app.use('/auth', auth)    
     app.listen(PORT, () => {
         console.log('Funfando');

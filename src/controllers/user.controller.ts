@@ -1,7 +1,11 @@
 import { Users } from '../models/user.entity'
+import Mail from '../utils/mail';
 
-
-class UserController {
+class UserController{
+    mail: Mail;
+    constructor(){
+        this.mail = new Mail()
+    }
     public async confirmEmail(pin: string): Promise<any>{
         let result = {
             statusCode: 200,
@@ -29,7 +33,12 @@ class UserController {
             result['statusCode'] = 400
         }
         return result       
-        }
     }
+    public async sendPin(pin: string, email: string): Promise<void>{
+        console.log(pin)
+        console.log(email)
+        this.mail.sendEmail(email, 'confirme email', 'html envio email.')
+    }
+}
 
 export default UserController

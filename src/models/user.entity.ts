@@ -19,14 +19,14 @@ export type UserCreateAttributes = Optional<IUser, 'id'>
 export class Users extends Model<IUser, UserCreateAttributes> {
    declare id: number | null;
    declare name: string | null;
-   declare email: string | null;
+   declare email: string;
    declare username: string | null;
    declare encryptedPassword: string ;
    declare role: string | null;
    declare createdAt: Date | null;
    declare updatedAt: Date | null;
    declare active: number | null;
-   declare pin: string | null;
+   declare pin: string ;
 }
 
 
