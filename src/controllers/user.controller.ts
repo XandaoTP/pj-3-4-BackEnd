@@ -37,7 +37,11 @@ class UserController{
     public async sendPin(pin: string, email: string): Promise<void>{
         console.log(pin)
         console.log(email)
-        this.mail.sendEmail(email, 'confirme email', 'html envio email.')
+        this.mail.sendEmail(email, 'confirme email', `
+        <h1>Esse é o seu pin</h1>
+        <h2>Utilze esse pin ${pin}para validar seu email</h2>
+        <a hre="http://localhost:3000/auth/confirm-email'>ATIVAR</a>
+        `)
     }
 }
 

@@ -21,6 +21,7 @@
     "@types/express": "^4.17.14",
     "@types/express-session": "^1.17.5",
     "@types/hbs": "^4.0.1",
+    "@types/nodemailer": "^6.4.6",
     "express-mysql-session": "^2.1.8"
   }
 }
