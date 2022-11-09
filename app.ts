@@ -79,7 +79,7 @@ const run = async () =>{
                         if(userLogin.active){
                         return userLogin;
                     } else {
-                        userControl.sendPin(userLogin.pin, userLogin.email)
+                        userControl.sendPin(userLogin.pin, userLogin.email, userLogin.name)
                         return false
                         }
                     }

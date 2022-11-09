@@ -14,7 +14,7 @@ export default class Mail {
             secure: true
         })
     }
-    async sendEmail(to: string, subject: string, html: string): Promise<any>{
+    async sendEmail(to: string, subject: string, html: string, context: any): Promise<any>{
         console.log(to)
         console.log(subject)
         console.log(html)

@@ -28,8 +28,8 @@ const userEncryptPass =  {
                     request.payload.encryptedPassword = await bcrypt.hash(request.payload.encryptedPassword, 8)
                 }
                 //TODO: FAZER ENVIO DE E-MAIL AO CRIAR USUARIO
-                request.payload.pin = '123456'
-                userControl.sendPin(request.payload.pin, request.payload.email)
+                request.payload.pin = (Math.floor(100000 + Math.random()* 900000)).toString();
+                userControl.sendPin(request.payload.pin, request.payload.email, request.payload.name)
                 return request
             }  
         },
