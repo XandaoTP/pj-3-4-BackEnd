@@ -75,7 +75,18 @@
         const initialValue = [null, null, null, null, null, null];
         const btn_text = document.querySelector('#text_btn')
         const urlPin = window.location.origin;
-
+        const localPin =  window.location.search.split("?pin=")[1]
+        console.log(localPin)
+        
+        const loadPin = () => {
+            if(localPin !== undefined) {
+                for(let i = 0 ; i < 6; i++){
+                    document.querySelector(`#ipt_${i}`).value = localPin[i];
+                    initialValue[i] = localPin[i];
+                }
+            }
+        }
+        
         pinNumbers.forEach(value => {
             value.addEventListener('keyup', (event) => {
             let iptname = parseInt(event.currentTarget.name);
@@ -125,7 +136,7 @@
             try {
              const result = await axios({
                    
-                    url: `http://localhost:3000/auth/confirm-email`,
+                    url: `http://localhost:3000/auth/confirm-email?pin=${pin}`,
                     method: "post",
                     data: {
                         pin
