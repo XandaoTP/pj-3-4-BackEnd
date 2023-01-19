@@ -18,6 +18,7 @@ import { userEncryptPass, userOptions } from './src/utils/usersOptionsResource';
 import bodyParser from 'body-parser'
 import UserController from './src/controllers/user.controller';
 
+
 const userControl = new UserController();
 const PORT = process.env.PORT_ENV;
 var mysqlStore = require('express-mysql-session')(session);
