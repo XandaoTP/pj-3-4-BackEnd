@@ -17,6 +17,7 @@ import path from 'node:path'
 import { userEncryptPass, userOptions } from './src/utils/usersOptionsResource';
 import bodyParser from 'body-parser'
 import UserController from './src/controllers/user.controller';
+import dashBoard from './src/routes/dashboard';
 
 
 const userControl = new UserController();
@@ -113,6 +114,7 @@ const run = async () =>{
     app.use(admin.options.rootPath, adminRouter)
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use('/auth', auth)    
+    app.use('/dashboard', dashBoard)    
     app.listen(PORT, () => {
         console.log('Funfando');
     })

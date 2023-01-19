@@ -21,9 +21,11 @@
     "mysql2": "^2.3.3",
     "nodemailer": "^6.8.0",
     "nodemailer-express-handlebars": "^5.0.0",
+    "react": "^18.2.0",
     "react-bootstrap": "^2.7.0",
     "react-chartjs-2": "^5.2.0",
     "sequelize": "^6.25.3",
+    "swr": "^2.0.1",
     "ts-node": "^10.9.1",
     "tslib": "^2.4.0"
   },

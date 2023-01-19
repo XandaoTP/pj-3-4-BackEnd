@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import useSWR from 'swr'
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -10,8 +11,7 @@ import {
   } from 'chart.js';
   import { Bar } from 'react-chartjs-2';
   import faker from 'faker';
-
-
+import moment from 'moment';
 
   ChartJS.register(
     CategoryScale,
@@ -21,7 +21,7 @@ import {
     Tooltip,
     Legend
   );
-  export const options = {
+  export const optPlayersQty = {
     responsive: true,
     plugins: {
       legend: {
@@ -34,23 +34,6 @@ import {
     },
   };
   
-  const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-  
-  export const data = {
-    labels,
-    datasets: [
-      {
-        label: 'Dataset 1',
-        data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      },
-      {
-        label: 'Dataset 2',
-        data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
-      },
-    ],
-  };
 
 const col = {
     width: '50%',
@@ -60,20 +43,27 @@ const col = {
   }
 const item ={
   background: '#333',
-  height: '500px',
+  height: '300px',
   width: '100%',
-  color: '#fff'
+  color: '#fff',
+  alignitems: 'center'
 }
 const input = {
   padidng: '5px',
   fontSize: '1.2em'
 }
+
+const fetcher = (...args) => fetch(...args).then(res => res.json())
+
+
 const dashBoards = () => {
 
   const [ initialDate, setInitialDate ] = useState('')
   const [ finalDate, setFinalDate ] = useState('')
   const [ selectDate, setSelectDate ] = useState('all')
-  
+  const { data, error, isLoading } = useSWR('http://localhost:3000/dashboard/players/quantity', fetcher)
+  console.log(data)
+  console.log(data)
   useEffect(() => {
       if(selectDate !== 'custom') {
         setInitialDate('');
@@ -94,17 +84,23 @@ const dashBoards = () => {
                       style={input}
                       value={initialDate}
                       onChange={(e) => setInitialDate(e.target.value)}
-                      disabled={selectDate !== 'custom'}/>
+                      disabled={selectDate !== 'custom'}
+                      max={finalDate !== ''  ? finalDate : moment().format('YYYY-MM-DD')}
+                    />
                     <input 
                       type="date" 
                       style={input}
                       value={finalDate}
                       onChange={(e) => setFinalDate(e.target.value)}
-                      disabled={selectDate !== 'custom'}/>
+                      disabled={selectDate !== 'custom'}
+                      max={moment().format('YYYY-MM-DD')}
+                      min={initialDate !== '' ? initialDate : null}
+                      />
                     <select 
                       id='' 
                       style={input}
-                      onChange={(e) => setSelectDate(e.target.value)}>
+                      onChange={(e) => setSelectDate(e.target.value)}
+                    >
                         <option value='all'>Tudo</option>
                         <option value='7'>7 Dias</option>
                         <option value='15'>15 dias</option>
@@ -113,6 +109,23 @@ const dashBoards = () => {
                         <option value='360'>1 ano</option>
                         <option value='custom'>Custom</option>
                     </select>   
+                </div>
+                <div>
+                  {data ?
+                    <div style={col}>
+                      <div style={item}><Bar options={optPlayersQty} data={data}/>
+                      </div>
+                    </div> : ''
+                    }
+                    <div style={col}>
+                      <div style={item}></div>
+                    </div>
+                    <div style={col}>
+                      <div style={item}></div>
+                    </div>
+                    <div style={col}>
+                      <div style={item}></div>
+                    </div>
                 </div>
             </div>
 }
