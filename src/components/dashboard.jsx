@@ -61,8 +61,9 @@ const dashBoards = () => {
   const [ initialDate, setInitialDate ] = useState('')
   const [ finalDate, setFinalDate ] = useState('')
   const [ selectDate, setSelectDate ] = useState('all')
-  const { data: plyrQty } = useSWR(`http://localhost:3000/dashboard/players/quantity?initial_Date=${initialDate}&final_Date=${finalDate}&select_Date=${selectDate}`, fetcher)
-  const { data: ChampQty } = useSWR('http://localhost:3000/dashboard/championship/quantity?initial_Date=${initialDate}&final_Date=${finalDate}&select_Date=${selectDate}', fetcher)
+  const { data: plyrQty } = useSWR(`http://localhost:3000/dashboard/players/quantity?initial_date=${initialDate}&final_date=${finalDate}&select_date=${selectDate}`, fetcher)
+  const { data: PlatQty } = useSWR(`http://localhost:3000/dashboard/plataform/quantity?initial_date=${initialDate}&final_date=${finalDate}&select_date=${selectDate}`, fetcher)
+  const { data: gamesQty } = useSWR(`http://localhost:3000/dashboard/games/quantity?initial_date=${initialDate}&final_date=${finalDate}&select_date=${selectDate}`, fetcher)
   console.log(plyrQty)
 
   useEffect(() => {
@@ -118,18 +119,18 @@ const dashBoards = () => {
                       </div>
                     </div> : ''
                     }
-                    {ChampQty ?
+                    {PlatQty ?
                     <div style={col}>
-                      <div style={item}><Bar options={optPlayersQty} data={ChampQty}/>
+                      <div style={item}><Bar options={optPlayersQty} data={PlatQty}/>
                       </div>
                     </div> : ''
                     }
+                     {gamesQty ?
                     <div style={col}>
-                      <div style={item}></div>
-                    </div>
-                    <div style={col}>
-                      <div style={item}></div>
-                    </div>
+                      <div style={item}><Bar options={optPlayersQty} data={gamesQty}/>
+                      </div>
+                    </div> : <p>sdas</p>
+                    }
                 </div>
             </div>
 }

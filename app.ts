@@ -21,6 +21,7 @@ import UserController from './src/controllers/user.controller';
 import dashBoard from './src/routes/dashboard';
 import { ReportGames } from './src/models/reportGames.entity';
 import { ReportPlataform } from './src/models/reportPlataform.entity';
+import { ReportUsers } from './src/models/reportUsers.entity';
 
 
 const userControl = new UserController();
@@ -47,6 +48,7 @@ const run = async () =>{
             optionsResourceModel(Games),
             optionsResourceModel(ReportGames),
             optionsResourceModel(ReportPlataform),
+            optionsResourceModel(ReportUsers),
             optionsResourceModel(Users,
                 userOptions,
                 userEncryptPass,

@@ -9,6 +9,7 @@ interface IReportUsers{
 const reportUsersSchema = new Schema<IReportUsers>(
     {
         value: Number,
+        date: Date,
     },
     {timestamps: true}
 );

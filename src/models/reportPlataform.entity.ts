@@ -10,6 +10,7 @@ interface IReportPlataform{
 const reportPlataformSchema = new Schema<IReportPlataform>(
     {
         name: String,
+        value: Number
     },
     {timestamps: true}
 );

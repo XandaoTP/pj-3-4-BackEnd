@@ -10,6 +10,7 @@ interface IReportGames{
 const reportGamesSchema = new Schema<IReportGames>(
     {
         name: String,
+        value: Number,
         date: Date,
     },
     {timestamps: true}
