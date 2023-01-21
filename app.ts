@@ -2,8 +2,9 @@ require('dotenv').config()
 import AdminJS from 'adminjs';
 import AdminJsExpress from '@adminjs/express';
 import  express  from 'express';
-import sequelize from './db';
+import { sequelize, mongodb } from './db';
 import * as AdminJSSequelize from '@adminjs/sequelize';
+import * as AdminJSMongoose from '@adminjs/mongoose';
 import { Plataforms } from './src/models/plataform.entity';
 import { Games } from './src/models/games.entity';
 import { optionsResourceModel } from './src/utils/optionsResourceModel';
@@ -18,6 +19,7 @@ import { userEncryptPass, userOptions } from './src/utils/usersOptionsResource';
 import bodyParser from 'body-parser'
 import UserController from './src/controllers/user.controller';
 import dashBoard from './src/routes/dashboard';
+import { ReportGames } from './src/models/reportGames.entity';
 
 
 const userControl = new UserController();
@@ -29,6 +31,10 @@ AdminJS.registerAdapter({
     Database: AdminJSSequelize.Database
 })
 
+AdminJS.registerAdapter({
+    Resource: AdminJSMongoose.Resource,
+    Database: AdminJSMongoose.Database
+});
 const run = async () =>{
     const admiJsOptions = {
         assets: {
@@ -38,6 +44,7 @@ const run = async () =>{
         resources: [
             optionsResourceModel(Plataforms),
             optionsResourceModel(Games),
+            optionsResourceModel(ReportGames),
             optionsResourceModel(Users,
                 userOptions,
                 userEncryptPass,
@@ -60,6 +67,9 @@ const run = async () =>{
         .then((result) => console.log(result))
         .catch((err) => console.log(err))
 
+    mongodb.once("open", () => {
+        console.log('conexão aberta')
+    })
 
     const admin = new AdminJS(admiJsOptions);
 

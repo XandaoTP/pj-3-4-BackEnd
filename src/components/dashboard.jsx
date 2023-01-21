@@ -29,7 +29,7 @@ import moment from 'moment';
       },
       title: {
         display: true,
-        text: 'Chart.js Bar Chart',
+        text: 'Usuarios por campeonato',
       },
     },
   };
@@ -61,9 +61,10 @@ const dashBoards = () => {
   const [ initialDate, setInitialDate ] = useState('')
   const [ finalDate, setFinalDate ] = useState('')
   const [ selectDate, setSelectDate ] = useState('all')
-  const { data, error, isLoading } = useSWR('http://localhost:3000/dashboard/players/quantity', fetcher)
-  console.log(data)
-  console.log(data)
+  const { data: plyrQty } = useSWR(`http://localhost:3000/dashboard/players/quantity?initial_Date=${initialDate}&final_Date=${finalDate}&select_Date=${selectDate}`, fetcher)
+  const { data: ChampQty } = useSWR('http://localhost:3000/dashboard/championship/quantity?initial_Date=${initialDate}&final_Date=${finalDate}&select_Date=${selectDate}', fetcher)
+  console.log(plyrQty)
+
   useEffect(() => {
       if(selectDate !== 'custom') {
         setInitialDate('');
@@ -111,15 +112,18 @@ const dashBoards = () => {
                     </select>   
                 </div>
                 <div>
-                  {data ?
+                  {plyrQty ?
                     <div style={col}>
-                      <div style={item}><Bar options={optPlayersQty} data={data}/>
+                      <div style={item}><Bar options={optPlayersQty} data={plyrQty}/>
                       </div>
                     </div> : ''
                     }
+                    {ChampQty ?
                     <div style={col}>
-                      <div style={item}></div>
-                    </div>
+                      <div style={item}><Bar options={optPlayersQty} data={ChampQty}/>
+                      </div>
+                    </div> : ''
+                    }
                     <div style={col}>
                       <div style={item}></div>
                     </div>
