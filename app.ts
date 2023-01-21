@@ -20,6 +20,7 @@ import bodyParser from 'body-parser'
 import UserController from './src/controllers/user.controller';
 import dashBoard from './src/routes/dashboard';
 import { ReportGames } from './src/models/reportGames.entity';
+import { ReportPlataform } from './src/models/reportPlataform.entity';
 
 
 const userControl = new UserController();
@@ -45,6 +46,7 @@ const run = async () =>{
             optionsResourceModel(Plataforms),
             optionsResourceModel(Games),
             optionsResourceModel(ReportGames),
+            optionsResourceModel(ReportPlataform),
             optionsResourceModel(Users,
                 userOptions,
                 userEncryptPass,
